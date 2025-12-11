@@ -1,53 +1,61 @@
-# Mobile FHE Architektur-Studie & PoC
+# 🏛️ **EasyFHE Architecture Study**
+*Research & Vision for High-Performance FHE*
 
-[![Status](https://img.shields.io/badge/Status-Research_Preview-orange)]()
-[![Backend](https://img.shields.io/badge/Backend-OpenFHE_v1.4.2-blue)]()
+[![Vision](https://img.shields.io/badge/Vision-v7.3-00aaff.svg)](vision/v7-3-vision.html)
+[![Status](https://img.shields.io/badge/Status-Research-orange.svg)]()
+[![Implementation](https://img.shields.io/badge/Code-fhe--eva--core-success.svg)](https://github.com/adnan19825/fhe-eva-core)
 
-> **Zusammenfassung:** Architektur-Studie zur Machbarkeit von Fully Homomorphic Encryption (FHE) auf Mobilgeräten.
+**Design documents, benchmarks, and architectural decisions for the EasyFHE ecosystem.**
 
-## 📊 Gap-Analyse: Behauptung vs. Realität (4. Quartal 2025)
-
-| Besonderheit | Vision (Ziel) | Realität (Ist-Zustand) | Delta Ursache |
-| :--- | :--- | :--- | :--- |
-| **Latenz** | 0,72 s | **~2,3 s** | Fehlende Vulkan/Metall-Beschleunigung |
-| **Sicherheit** | FIPS 140-3 | **128-Bit** | NIST-Standards erst 2026 erwartet |
-| **Backend** | GPU (A100) | **CPU (AVX/NEON)** | HEIR GPU-Backend experimentell |
-
-## 🛠️ Machbarkeitsnachweis (PoC)
-
-Der Code demonstriert die Inferenz-Pipeline.
-
-* **Compiler:** Google HEIR (MLIR)
-* **Laufzeit:** OpenFHE (CKKS-Schema)
-* **Optimierung:** SIMD-Packing (4096 Steckplätze)
-
-### Status
-Das Projekt zeigt transparent, dass Hochleistungs-FHE machbar ist, aber aktuelle Software-Stacks noch Optimierung benötigen.
-
----
-**Autor:** Adnan Mamutoski – Lösungsarchitekt
+</div>
 
 ---
 
-## 💻 Proof-of-Concept-Code (Codeausschnitt)
+## 📄 **Core Documents**
 
-Da dies eine Architektur-Studie ist, hier der Kern-Algorithmus (Python Simulation):
+### 🔭 [Vision Paper: EasyFHE v7.3](vision/v7-3-vision.html)
+Das strategische Fundament unserer FHE-Initiative.
+* **Silicon-Era Roadmap:** Der Weg zu nativer Performance im Browser.
+* **Tech Stack:** OpenFHE, Cheddar GPU, HEIR/MLIR.
+* **Benchmarks:** Validierte Performance-Ziele (25x GPU Speedup).
 
-```python
-import numpy as np
+👉 **[Hier klicken, um das Vision Paper zu lesen](vision/v7-3-vision.html)**
 
-# Konfiguration
-INPUT_DIM = 4096
-HIDDEN_DIM = 64
+---
 
-def cifar_fhe_inference_simulation(x):
-    """
-    Simuliert die FHE Inferenz Pipeline.
-    Ziel-Latenz: 0.72s | Gemessen: ~2.3s
-    """
-    print("Verschlüsselte Inferenz wird gestartet...")
-    # Simulation der homomorphen Operationen
-    return "Verschlüsseltes Ergebnis"
+## 🔗 **Ecosystem Structure**
 
-if __name__ == "__main__":
-    print("Lückenanalyse: Ziel 0,72 Sekunden vs. Realität ~2,3 Sekunden")
+Wir trennen strikt zwischen **Forschung** (dieses Repo) und **Produktion** (Core Repo).
+
+| Repository | Zweck | Inhalt |
+| :--- | :--- | :--- |
+| **🟢 [fhe-eva-core](https://github.com/adnan19825/fhe-eva-core)** | **Implementation** | Lauffähiger Code, WebGPU/WASM Runtime, Live Demo. |
+| **🔵 [easyfhe-architecture-study](https://github.com/adnan19825/easyfhe-architecture-study)** | **Research** | Vision Paper, ADRs, Theoretical Benchmarks. |
+
+---
+
+## 🏗️ **Architectural Decision Records (ADR)**
+
+Technische Grundsatzentscheidungen für EasyFHE:
+
+* **[ADR-001: WebGPU vs. WASM](adr/001-webgpu-vs-wasm.md)** – Warum wir auf Compute Shaders statt reinem Assembly setzen.
+* **[ADR-002: Security Model](adr/002-security-model.md)** – Client-Side Key Generation und "Zero-Trust" Server Architektur.
+
+---
+
+## 📊 **Technology Radar**
+
+Wir evaluieren kontinuierlich folgende Technologien für EasyFHE:
+
+* **Computation:** `WebGPU (WGSL)`, `WASM SIMD`, `Vulkan`
+* **Compilers:** `HEIR (Google)`, `MLIR`, `OpenFHE`
+* **Cryptography:** `TFHE` (Boolean/Integer), `CKKS` (Approximate Arithmetic)
+
+---
+
+<div align="center">
+
+Research by **Adnan Mamutoski**
+*Building the future of encrypted computation.*
+
+</div>
