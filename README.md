@@ -1,61 +1,30 @@
-# 🏛️ **EasyFHE Architecture Study**
-*Research & Vision for High-Performance FHE*
+# Easy-Eva Studio v7.5 (Codename: Traffic Control)
 
-[![Vision](https://img.shields.io/badge/Vision-v7.3-00aaff.svg)](vision/v7-3-vision.html)
-[![Status](https://img.shields.io/badge/Status-Research-orange.svg)]()
-[![Implementation](https://img.shields.io/badge/Code-fhe--eva--core-success.svg)](https://github.com/adnan19825/fhe-eva-core)
+[![Status](https://img.shields.io/badge/Status-Architectural_Preview-orange)]()
+[![Stack](https://img.shields.io/badge/Tech-Rust_|_WebGPU_|_HEIR-blue)]()
+[![Compliance](https://img.shields.io/badge/Compliance-KRITIS_Ready-green)]()
 
-**Design documents, benchmarks, and architectural decisions for the EasyFHE ecosystem.**
+> **The Governance Layer for Autonomous FHE Mesh Networks.**
 
-</div>
+## 🌍 Mission
+Easy-Eva Studio ist die **Legislative** für das EasyFHE Mesh. Hier werden Sicherheits-Policies, FHE-Parameter und KI-Berechtigungen ("Traffic Rules") definiert, validiert und kryptografisch signiert.
 
----
+Das Studio trennt strikt zwischen **Policy** (Gesetz) und **Execution** (Ausführung), inspiriert von Quantinuum's QEC-Architektur.
 
-## 📄 **Core Documents**
+## 🏗 Architecture: The "Traffic Circle" Model
 
-### 🔭 [Vision Paper: EasyFHE v7.3](vision/v7-3-vision.html)
-Das strategische Fundament unserer FHE-Initiative.
-* **Silicon-Era Roadmap:** Der Weg zu nativer Performance im Browser.
-* **Tech Stack:** OpenFHE, Cheddar GPU, HEIR/MLIR.
-* **Benchmarks:** Validierte Performance-Ziele (25x GPU Speedup).
+Das System betrachtet das Netzwerk als autonomen Kreisverkehr:
+1.  **Legislative (Studio):** Definiert Spurbreite, Ausfahrten und Regeln (z.B. "Kein Node unter 128-Bit Security").
+2.  **Judikative (Compiler):** Validiert Wasm/WebGPU-Artefakte gegen diese Regeln.
+3.  **Exekutive (Runtime):** KI-Agenten optimieren den Verkehrsfluss (Bootstrapping, Scaling) innerhalb der signierten Grenzen.
 
-👉 **[Hier klicken, um das Vision Paper zu lesen](vision/v7-3-vision.html)**
+## 📂 Project Structure
 
----
-
-## 🔗 **Ecosystem Structure**
-
-Wir trennen strikt zwischen **Forschung** (dieses Repo) und **Produktion** (Core Repo).
-
-| Repository | Zweck | Inhalt |
-| :--- | :--- | :--- |
-| **🟢 [fhe-eva-core](https://github.com/adnan19825/fhe-eva-core)** | **Implementation** | Lauffähiger Code, WebGPU/WASM Runtime, Live Demo. |
-| **🔵 [easyfhe-architecture-study](https://github.com/adnan19825/easyfhe-architecture-study)** | **Research** | Vision Paper, ADRs, Theoretical Benchmarks. |
-
----
-
-## 🏗️ **Architectural Decision Records (ADR)**
-
-Technische Grundsatzentscheidungen für EasyFHE:
-
-* **[ADR-001: WebGPU vs. WASM](adr/001-webgpu-vs-wasm.md)** – Warum wir auf Compute Shaders statt reinem Assembly setzen.
-* **[ADR-002: Security Model](adr/002-security-model.md)** – Client-Side Key Generation und "Zero-Trust" Server Architektur.
-
----
-
-## 📊 **Technology Radar**
-
-Wir evaluieren kontinuierlich folgende Technologien für EasyFHE:
-
-* **Computation:** `WebGPU (WGSL)`, `WASM SIMD`, `Vulkan`
-* **Compilers:** `HEIR (Google)`, `MLIR`, `OpenFHE`
-* **Cryptography:** `TFHE` (Boolean/Integer), `CKKS` (Approximate Arithmetic)
-
----
-
-<div align="center">
-
-Research by **Adnan Mamutoski**
-*Building the future of encrypted computation.*
-
-</div>
+```text
+Easy-Eva-Studio/
+├── policies/              # The Law (Immutable Security Profiles)
+│   ├── security_profile.yaml
+│   └── compliance.json
+├── blueprints/            # The Logic (FHE Pipelines & QEC Decoders)
+├── agents/                # The Governance (AI Permissions)
+└── generated/             # The Artifacts (Signed Wasm/WGSL)
