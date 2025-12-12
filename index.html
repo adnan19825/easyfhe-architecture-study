@@ -47,12 +47,24 @@
             c.innerHTML += `<div>[${time}] ${msg}</div>`;
             c.scrollTop = c.scrollHeight;
         }
+// ... (oberer HTML-Teil bleibt gleich)
+
+    <script>
+        // Der erwartete Hash des Wasm-Artefakts (Anti-Tampering)
+        const EXPECTED_HASH = '1baf3bba9cf8cd91d778eb07945c99f176120bfb6bcaf084f4210d79f60858cc'; 
+        const WASM_PATH = 'generated/wasm/decoder_v1.wasm';
+
+        function log(msg) {
+            const c = document.getElementById('console');
+            const time = new Date().toISOString().split('T')[1].split('.')[0];
+            c.innerHTML += `<div>[${time}] ${msg}</div>`;
+            c.scrollTop = c.scrollHeight;
+        }
 
         async function connectRuntime() {
             log("Attempting to fetch Wasm Artifact...");
             try {
-                // Hier holen wir DEIN echtes Wasm-File
-                const response = await fetch('generated/wasm/decoder_v1.wasm');
+                const response = await fetch(WASM_PATH);
                 
                 if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
                 
@@ -61,7 +73,23 @@
                 
                 log(`✅ Artifact Found! Size: ${sizeKB} KB`);
                 
-                // Compliance Check im Browser
+                // --- NEU: Anti-Tampering Check ---
+                log("🔍 Running Integrity Check (SHA-256)...");
+                const actualHash = await calculateSha256(buffer);
+                
+                if (actualHash !== EXPECTED_HASH) {
+                    log("❌ ERROR: ARTIFACT TAMPERED! Hash mismatch.");
+                    log(`Expected: ${EXPECTED_HASH.substring(0, 10)}...`);
+                    log(`Actual:   ${actualHash.substring(0, 10)}...`);
+                    document.getElementById('sysStatus').classList.remove('online');
+                    document.getElementById('sysText').innerText = "TAMPERED/BLOCKED";
+                    document.getElementById('sysText').style.color = "#ef4444";
+                    return;
+                }
+                log("✅ Integrity Check PASSED!");
+                // ---------------------------------
+                
+                // Compliance Check
                 if (sizeKB < 1300) {
                     log("🛡️ Compliance Check: PASSED (< 1.3 MB)");
                     document.getElementById('sysStatus').classList.add('online');
@@ -73,11 +101,17 @@
                 }
 
             } catch (e) {
-                log(`⚠️ Error: ${e.message}`);
-                log("Did you push the 'generated/wasm' folder?");
+                log(`⚠️ Error fetching ${WASM_PATH}: ${e.message}`);
             }
+        }
+        
+        // Helferfunktion zur Berechnung des SHA-256 Hashs im Browser
+        async function calculateSha256(buffer) {
+            const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            return hashHex;
         }
     </script>
 </body>
 </html>
-
