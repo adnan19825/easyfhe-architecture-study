@@ -1,0 +1,20 @@
+apiVersion: easy-eva/v1
+kind: Agent
+metadata:
+  name: traffic-controller-v1
+  role: OPTIMIZER
+spec:
+  scope:
+    pipelines: ["energy-forecast-grid"]
+  permissions:
+    allowed:
+      - action: "TRIGGER_BOOTSTRAP"
+        condition: "noise_level > 2^-60"
+      - action: "ADJUST_DEPTH"
+        range: [1, 5]
+    forbidden:
+      - "EXPORT_PRIVATE_KEY"
+      - "CHANGE_ENCRYPTION_SCHEME"
+  constraints:
+    max_actions_per_minute: 12
+

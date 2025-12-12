@@ -1,0 +1,19 @@
+apiVersion: easy-eva/v1
+kind: SecurityProfile
+metadata:
+  name: kritis-energy-grid-level-9
+  version: "7.5.0"
+spec:
+  crypto:
+    pqc_kem: "ML-KEM-1024"       # Post-Quantum Standard (Kyber)
+    fhe_scheme: "CKKS"           # Homomorphe Arithmetik
+    min_security_bits: 128       # BSI/NIST Anforderung
+    ring_dimension: 8192
+  runtime:
+    wasm_max_size_mb: 1.3        # Quantinuum-Style Limit
+    max_exec_time_ms: 200
+  ai_governance:
+    forbidden_actions:
+      - "EXPORT_SECRET_KEY"      # Rote Linie für die KI
+      - "LOWER_SECURITY_LEVEL"
+
