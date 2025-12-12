@@ -1,0 +1,20 @@
+use wasm_bindgen::prelude::*;
+
+// Simulierter QEC Decoder Check
+#[wasm_bindgen]
+pub fn check_noise_level(current_noise: f64) -> String {
+    // Deine Policy: Variance > 2^-60 (ca. 1.0e-18)
+    let threshold = 1.0e-18;
+    
+    if current_noise > threshold {
+        "CRITICAL: Bootstrap required".to_string()
+    } else {
+        "STABLE: Continue computation".to_string()
+    }
+}
+[dependencies]
+
+serde = { version = "1.0", features = ["derive"] }
+serde_yaml = "0.9"
+colored = "2.0" # Für grüne/rote Statusmeldungen
+anyhow = "1.0"  # Einfaches Error Handling
