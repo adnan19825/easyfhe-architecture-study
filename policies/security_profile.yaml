@@ -1,0 +1,35 @@
+---
+
+### Dein erster "Commit": Die Legislative
+
+Damit das Repo nicht leer ist, solltest du als allererstes das **Grundgesetz** hochladen. Erstelle im Repo die Datei `policies/security_profile.yaml` mit diesem Inhalt:
+
+**`policies/security_profile.yaml`**
+```yaml
+apiVersion: easy-eva/v1
+kind: SecurityProfile
+metadata:
+  name: kritis-energy-grid-level-9
+  version: "7.5.0"
+spec:
+  # 1. Kryptografische Gesetze
+  crypto:
+    pqc_kem: "ML-KEM-1024"       # Post-Quantum Standard (Kyber)
+    fhe_scheme: "CKKS"           # Für arithmetische Operationen
+    min_security_bits: 128       # NIST Anforderung
+    ring_dimension: 8192
+
+  # 2. Runtime-Grenzen (Quantinuum-Style)
+  runtime:
+    wasm_max_size_mb: 1.3        # Harte Obergrenze für Decoder
+    max_exec_time_ms: 200        # Real-time Constraint
+    allowed_syscalls: []         # Sandbox Mode: Keine Syscalls erlaubt
+
+  # 3. KI-Mandat (Die Ampel-Regeln)
+  ai_governance:
+    allowed_actions:
+      - "TRIGGER_BOOTSTRAP"      # KI darf Noise-Reset anfordern
+      - "OPTIMIZE_SHADER_TILES"  # KI darf WebGPU Code tunen
+    forbidden_actions:
+      - "EXPORT_SECRET_KEY"      # Absolutes Verbot
+      - "LOWER_SECURITY_LEVEL"   # Absolutes Verbot
