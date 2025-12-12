@@ -1,0 +1,28 @@
+apiVersion: aqrm/v1
+kind: FhePipeline
+metadata:
+  name: energy-forecast-ckks
+spec:
+  fhe_scheme: CKKS
+  security_profile: kritis-energy-level-9
+  parameters:
+    ring_dim: 16384
+    multiplicative_depth: 3
+    scale_bits: 60
+  stages:
+    - name: input-encode
+      op: encode
+      slots: 4096
+    - name: layer1-matmul
+      op: eval-matmul
+      depth_cost: 1
+    - name: layer1-rescale
+      op: rescale
+    - name: layer2-matmul
+      op: eval-matmul
+      depth_cost: 1
+    - name: layer2-bootstrap
+      op: bootstrap
+      when_noise_above: 0.5
+    - name: output-decode
+      op: decode
